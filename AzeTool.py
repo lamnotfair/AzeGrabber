@@ -1,4 +1,3 @@
-mytitle = "Aze Tool - By Aze Studios"
 import smtplib
 import discord
 import sys
@@ -13,8 +12,6 @@ from colorama import Fore
 from colorama import Style
 from casa import Clone
 from time import sleep
-
-system("title "+mytitle)
 
 client = discord.Client()
 
@@ -44,25 +41,24 @@ print("\n")
 print(f'{Fore.RED}Created by {Fore.YELLOW}@lamnotfair#0 & AZE/PVP#6112')
 print(f'{Fore.RED}Discord server : {Fore.BLUE}https://discord.gg/AfcfcFvXCW')
 print(f'{Fore.RED}GITHUB : {Fore.YELLOW}https://github.com/lamnotfair/AzeGrabber')
-print("\n")
 
 print(f'{Fore.RED}                                     ╔══════════════════════════════════════╗ ')   
 print(f'{Fore.RED}                                     ║1.SpamBOT          |4.Webhook Spammer ║')     
 print(f'{Fore.RED}                                     ║-------------------|------------------║') 
-print(f'{Fore.RED}                                     ║2.VC Joiner        |5.soon            ║') 
+print(f'{Fore.RED}                                     ║2.VC Joiner        |5.Cloner          ║') 
 print(f'{Fore.RED}                                     ║-------------------|------------------║') 
 print(f'{Fore.RED}                                     ║3.Email bomber     |6.soon            ║')                                                                                   
 print(f'{Fore.RED}                                     ╚══════════════════════════════════════╝ ')      
 select = int(input(f"{Fore.RED}[{Fore.LIGHTRED_EX}>{Fore.RED}] {Fore.LIGHTRED_EX}"))       
 print('\n')
 if select == 1:
+    print('\n') 
     token = input("BOTS Token here : ") 
     message = input("Message here : ")    
     prefix = '!'
     bot = commands.Bot(command_prefix=prefix)
     @bot.event
     async def on_ready():
-        print(f'{Fore.RED}══════════════════════════════════════')  
         print(f'{Fore.RED} Type !spam in chat for start!')
         print("\n")
         print(f'{bot.user.name} is ready...')
@@ -81,7 +77,7 @@ elif select == 2:
     @bot.event
     async def on_ready():
         print(f'{bot.user.name} is ready...')
-    print(f'{Fore.RED}══════════════════════════════════════')  
+    print('\n')  
     print(f'{Fore.RED} Type !join_voice in chat for start!')  
     @bot.command()
     async def join_voice(self, ctx):
@@ -204,3 +200,66 @@ elif select == 4:
             while True:
                 aze()
         aze()
+        
+elif select == 5:
+    with open('config.json') as config_file: data = json.load(config_file)
+    token = data['token']
+    head = {'Authorization': str(token)}
+    src = requests.get('https://discordapp.com/api/v6/users/@me', headers=head)
+    if src.status_code == 200:
+        print(f'{Fore.GREEN}[+] Your Token Is Valid {Style.RESET_ALL}')
+        sleep(2)
+    else:
+        print(f'{Fore.RED}[-] Your Token Is Invalid {Style.RESET_ALL}')
+        sleep(4)
+        exit = input("Your Token Is Invalid Press enter...")
+    def mainanswer():
+        headers = {'Authorization': token, 'Content-Type': 'application/json'}
+        r = requests.get('https://discord.com/api/v6/users/@me', headers=headers)
+        if r.status_code == 200:
+            userName = r.json()['username'] + '#' + r.json()['discriminator']
+            userID = r.json()['id']
+
+        print(f'''                                    Logged As {userName} ({userID})''')
+        print('\n')
+        print(f'                                             [1] > {Fore.RED}Clone Server')
+        print('\n')
+        print('\n')
+
+
+        answer = input(f'{Fore.RED}Choose : {Fore.LIGHTRED_EX}')
+        if answer == '1':
+            cloner()
+        else:
+            print('Incorrect selection, please choose a number')
+            mainanswer()
+    def cloner():
+        print('\n')
+        guild_s = input(f'{Fore.RED}Your Server ID That You Wnat To Copy > {Fore.LIGHTRED_EX}')
+        guild = input(f'{Fore.RED}Your Server ID To Copy The Server In Thare > {Fore.LIGHTRED_EX}')
+        input_guild_id = guild_s
+        output_guild_id = guild  
+
+
+
+
+        @client.event
+        async def on_ready():
+            print('\n')
+            print(f"Logged In as : {client.user}")
+            print("Cloning Server")
+            guild_from = client.get_guild(int(input_guild_id))
+            guild_to = client.get_guild(int(output_guild_id))
+            await Clone.roles_delete(guild_to)
+            await Clone.channels_delete(guild_to)
+            await Clone.roles_create(guild_to, guild_from)
+            await Clone.categories_create(guild_to, guild_from)
+            await Clone.channels_create(guild_to, guild_from)
+            await Clone.guild_edit(guild_to, guild_from)
+            await asyncio.sleep(5)
+            mainanswer()
+        client.run(token, bot=False)
+
+
+
+    mainanswer()
