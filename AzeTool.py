@@ -12,8 +12,7 @@ from colorama import Fore
 from colorama import Style
 from casa import Clone
 from time import sleep
-
-client = discord.Client()
+from time import sleep
 
 w = Fore.WHITE
 b = Fore.BLACK
@@ -229,6 +228,7 @@ elif select == 5:
 
         answer = input(f'{Fore.RED}Choose : {Fore.LIGHTRED_EX}')
         if answer == '1':
+            client = discord.Client()
             cloner()
         else:
             print('Incorrect selection, please choose a number')
