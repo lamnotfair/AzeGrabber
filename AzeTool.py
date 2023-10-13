@@ -1,6 +1,7 @@
 import smtplib
 import discord
 import sys
+import subprocess
 import os
 import json
 import requests
@@ -42,20 +43,19 @@ print(f'{Fore.RED}Discord server : {Fore.BLUE}https://discord.gg/AfcfcFvXCW')
 print(f'{Fore.RED}GITHUB : {Fore.YELLOW}https://github.com/lamnotfair/AzeGrabber')
 
 print(f'{Fore.RED}                                     ╔═══════════════════╦══════════════════╗ ')   
-print(f'{Fore.RED}                                     ║1.SpamBOT          ║4.Webhook Spammer ║')     
+print(f'{Fore.RED}                                     ║1 SpamBOT          ║4 Webhook Spammer ║')     
 print(f'{Fore.RED}                                     ╠═══════════════════╬══════════════════╣') 
-print(f'{Fore.RED}                                     ║2.VC Joiner        ║5.Cloner          ║') 
+print(f'{Fore.RED}                                     ║2 VC Joiner        ║5 Cloner          ║') 
 print(f'{Fore.RED}                                     ╠═══════════════════╬══════════════════╣') 
-print(f'{Fore.RED}                                     ║3.Email bomber     ║6.soon            ║')                                                                                   
+print(f'{Fore.RED}                                     ║3 Email bomber     ║6 DM BOT          ║')                                                                                   
 print(f'{Fore.RED}                                     ╚═══════════════════╩══════════════════╝ ')      
-select = int(input(f"{Fore.RED}[{Fore.LIGHTRED_EX}>{Fore.RED}] {Fore.LIGHTRED_EX}"))       
-print('\n')
+select = int(input(f"{Fore.RED}[{Fore.LIGHTRED_EX}>{Fore.RED}] {Fore.LIGHTRED_EX}"))    
 if select == 1:
     print('\n') 
+    intents = discord.Intents().all()
+    bot = commands.Bot(command_prefix='!', intents=intents)
     token = input("BOTS Token here : ") 
     message = input("Message here : ")    
-    prefix = '!'
-    bot = commands.Bot(command_prefix=prefix)
     @bot.event
     async def on_ready():
         print(f'{Fore.RED} Type !spam in chat for start!')
@@ -70,9 +70,9 @@ if select == 1:
     bot.run(token)
    
 elif select == 2:
+    intents = discord.Intents().all()
+    bot = commands.Bot(command_prefix='!', intents=intents)
     token = input("BOTS Token here : ")    
-    prefix = '!'
-    bot = commands.Bot(command_prefix=prefix)
     @bot.event
     async def on_ready():
         print(f'{bot.user.name} is ready...')
@@ -263,3 +263,30 @@ elif select == 5:
 
 
     mainanswer()
+
+elif select == 6:
+        intents = discord.Intents().all()
+        bot = commands.Bot(command_prefix='!', intents=intents)
+        token = input("BOTS Token here : ")    
+        @bot.event
+        async def on_ready():
+            print(f'{bot.user.name} is ready...')
+            print('\n')   
+            print(f'{Fore.RED} Type !dm-all [message] or !dm [member] [message] in chat for start!')
+            print('\n')
+        @bot.command()
+        async def dmall(ctx, *, message):
+            members = ctx.guild.members
+            for member in members:
+                try:
+                    await member.send(message)
+                    print(f"Sent a DM to {member.name}#{member.discriminator}")
+                except:
+                    print(f"Failed to send a DM to {member.name}#{member.discriminator}")
+        
+            await ctx.send("DMs sent to all members!")   
+        @bot.command()
+        async def dm(ctx,member:discord.Member,*,content):
+            channel = await member.create_dm()
+            await channel.send(content)
+        bot.run(token)
