@@ -8,6 +8,7 @@ color 4
 cls
 pip install intents
 pip install psutil
+pip install subprocess
 pip install discord==1.7.3
 echo Downloaded discord.py
 pip install colorama
